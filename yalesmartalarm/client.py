@@ -6,7 +6,6 @@ See https://github.com/laf/yale-smart-alarm for more information.
 
 import logging
 import requests
-import json
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -85,12 +84,8 @@ class YaleSmartAlarm:
         if params is None:
             response = requests.get(url, headers=headers, timeout=self._DEFAULT_REQUEST_TIMEOUT)
         else:
-            _LOGGER.debug(json.dumps(params))
             response = requests.post(url, headers=headers, data=params, timeout=self._DEFAULT_REQUEST_TIMEOUT)
 
-        _LOGGER.debug(json.dumps(headers))
-        _LOGGER.debug(url)
-        _LOGGER.debug(response)
         data = response.json()
         
         if data.get('code') != self.YALE_API_CODE:
@@ -120,7 +115,7 @@ class YaleSmartAlarm:
         response = requests.post(url, data=payload, headers=headers, timeout=self._DEFAULT_REQUEST_TIMEOUT)
 
         data = response.json()
-        _LOGGER.debug("Login reponse: {}".format(data))
+        _LOGGER.debug("Login response: {}".format(data))
         if data.get("error"):
             _LOGGER.debug("Failed to authenticate with Yale Smart Alarm. Error: {}".format(
                             data.error_description))
